@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javascript-Calculator</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link
+      rel="shortcut icon"
+      href="./icons8-calculator-96.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body
+    style="
+      background-image: url('./simple-white-education-pencil-ca.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    "
+    class="md:h-[80vh] h-[92.5vh]"
+  >
+    <div
+      class="mx-auto mt-12 bg-gray-900/90 w-[350px] h-[570px] rounded-[10px] block shadow-[0_0_20px_rgba(255,165,0,0.7),0_0_40px_rgba(255,215,0,0.5)]"
+    >
+      <div class="px-4 py-2 pt-6 w-40 text-center mx-auto">
+        <h2 class="text-black font-semibold italic bg-white rounded-[6px]">
+          Jason Casio
+        </h2>
+      </div>
+
+      <div class="mx-auto py-4 w-[300px] h-[500px] rounded-[10px] text-white">
+        <div
+          class="mx-auto bg-white w-full h-[10%] rounded-[6px] mt-[-3px] text-black flex items-center justify-end px-4"
+          id="display"
+        >
+          <!-- <span class="mb-4"></span> -->
+        </div>
+
+        <div
+          class="grid grid-cols-4 gap-5 mt-10 w-full py-1 rounded-[6px] text-white font-semibold"
+        >
+          <!-- First-Row -->
+          <button class="bg-white text-black rounded-full w-15 h-15" id="clear">
+            C
+          </button>
+          <button class="bg-white text-black rounded-full w-15 h-15" id="erase">
+            Del
+          </button>
+          <button
+            class="bg-white text-black rounded-full w-15 h-15"
+            id="percentage"
+          >
+            %
+          </button>
+          <button class="bg-yellow-600 rounded-full w-15 h-15" id="btnDiv">
+            /
+          </button>
+
+          <!-- Second-Row -->
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num7"
+          >
+            7
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num8"
+          >
+            8
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num9"
+          >
+            9
+          </button>
+          <button
+            class="bg-yellow-600 text-white rounded-full w-15 h-15"
+            id="btnMulti"
+          >
+            x
+          </button>
+
+          <!-- Third-row -->
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num4"
+          >
+            4
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num5"
+          >
+            5
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num6"
+          >
+            6
+          </button>
+          <button
+            class="bg-yellow-600 text-white rounded-full w-15 h-15"
+            id="btnSub"
+          >
+            -
+          </button>
+
+          <!-- fourth row -->
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num1"
+          >
+            1
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num2"
+          >
+            2
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="num3"
+          >
+            3
+          </button>
+          <button
+            class="bg-yellow-600 text-white rounded-full w-15 h-15"
+            id="btnSum"
+          >
+            +
+          </button>
+
+          <!-- fifth row -->
+          <button
+            class="col-span-2 bg-gray-300/60 text-white rounded-full w-full h-12 mt-1.5"
+            id="num0"
+          >
+            0
+          </button>
+          <button
+            class="bg-gray-300/60 text-white rounded-full w-15 h-15"
+            id="dot"
+          >
+            .
+          </button>
+          <button
+            class="bg-yellow-600 text-white rounded-full w-15 h-15"
+            id="equal"
+          >
+            =
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Get data from HTML by ID
+
+      //    display screen
+      const display = document.getElementById("display");
+
+      //   each numbers-btn
+      const num0 = document.getElementById("num0");
+      const num1 = document.getElementById("num1");
+      const num2 = document.getElementById("num2");
+      const num3 = document.getElementById("num3");
+      const num4 = document.getElementById("num4");
+      const num5 = document.getElementById("num5");
+      const num6 = document.getElementById("num6");
+      const num7 = document.getElementById("num7");
+      const num8 = document.getElementById("num8");
+      const num9 = document.getElementById("num9");
+
+      //   each operation-btn
+      const btnSum = document.getElementById("btnSum");
+      const btnSub = document.getElementById("btnSub");
+      const btnMulti = document.getElementById("btnMulti");
+      const btnDiv = document.getElementById("btnDiv");
+      const equal = document.getElementById("equal");
+
+      // each function btn
+      const clear = document.getElementById("clear");
+      const erase = document.getElementById("erase");
+      const percentage = document.getElementById("percentage");
+      const dot = document.getElementById("dot");
+
+      //   The whole current value of Calculator
+      let currentExpression = "";
+
+      //Update Display on Screen function
+      function updateDisplay(value) {
+        currentExpression += value;
+        display.innerText = currentExpression;
+      }
+
+      //   ber jg oy btn der tor use EventListener
+      num0.addEventListener("click", () => updateDisplay("0"));
+      num1.addEventListener("click", () => updateDisplay("1"));
+      num2.addEventListener("click", () => updateDisplay("2"));
+      num3.addEventListener("click", () => updateDisplay("3"));
+      num4.addEventListener("click", () => updateDisplay("4"));
+      num5.addEventListener("click", () => updateDisplay("5"));
+      num6.addEventListener("click", () => updateDisplay("6"));
+      num7.addEventListener("click", () => updateDisplay("7"));
+      num8.addEventListener("click", () => updateDisplay("8"));
+      num9.addEventListener("click", () => updateDisplay("9"));
+
+      //   addevent listener with operation
+      btnSum.addEventListener("click", () => updateDisplay("+"));
+      btnSub.addEventListener("click", () => updateDisplay("-"));
+      btnMulti.addEventListener("click", () => updateDisplay("*"));
+      btnDiv.addEventListener("click", () => updateDisplay("/"));
+
+      dot.addEventListener("click", () => updateDisplay("."));
+
+      //   btn percentage
+      percentage.addEventListener("click", () => {
+        currentExpression = parseFloat(currentExpression / 100).toString(); // convert string to number hx jek ng 100, then convert tv string vinh
+        display.innerText = currentExpression; // oy vea display result in display screen
+      });
+
+      //   btn Clear
+      clear.addEventListener("click", () => {
+        currentExpression = ""; // pel yg press ler button ng tv oy vea clear
+        display.innerText = "0"; // yg dak jg pel dl yg clear hx jg oy vea jenh number 0
+      });
+
+      //   ah function Del nis erase 1 dg 1 digit of numbers
+      erase.addEventListener("click", () => {
+        currentExpression = currentExpression.slice(0, -1);
+        display.innerText = currentExpression || "0";
+      });
+
+      equal.addEventListener("click", () => {
+        try {
+          currentExpression = eval(currentExpression).toString();
+          display.innerText = currentExpression;
+        } catch {
+          display.innerText = "Error";
+          currentExpression = "";
+        }
+      });
+    </script>
+  </body>
+</html>
